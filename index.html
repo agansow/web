@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Andy Fazlic - Portfolio</title>
-  <script type="module" crossorigin src="/assets/index-DvRB2ofz.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-BhBLj65I.css">
+  <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
   <!-- background colors -->
@@ -28,7 +27,7 @@
 
         
         <div class="content">
-          <div class="tagline">Creating digital experiences with purpose and precision.</div>
+          <div class="tagline">Software development with precision and purpose.</div>
           <div class="contact">
             <p><a href="mailto:hello@fazlic.dev">hello@fazlic.dev</a></p>
             <p>Based in Houston, TX</p>
@@ -55,12 +54,7 @@
 
 
         <div class="content">
-          <div class="tagline">Creating digital experiences with purpose and precision.</div>
-          <div class="contact">
-            <p><a href="mailto:hello@fazlic.dev">hello@fazlic.dev</a></p>
-            <p>Based in Houston, TX</p>
-            <p>Available for new projects</p>
-          </div>
+          <div class="tagline">Studying Computer Science, Software Engineer, Cybersecurity, and Robotics.</div>
         </div>
 
         <div class="footer">
@@ -77,16 +71,16 @@
       <div class="card" id="projects">
 
         <div class="header">
-          <div class="logo">Projects</div>
+          <div class="logo">projects/0</div>
         </div>
 
 
         <div class="content">
-          <div class="tagline">Creating digital experiences with purpose and precision.</div>
+          <div class="tagline">Card Battler and Simulator. WIP</div>
           <div class="contact">
-            <p><a href="mailto:hello@fazlic.dev">hello@fazlic.dev</a></p>
-            <p>Based in Houston, TX</p>
-            <p>Available for new projects</p>
+            <p><a href="https://github.com">github/card-battler</a></p>
+            <p>Based on Python.</p>
+            <p>Created a Card Battling game, with modular support for adding new cards and simulation. Work in Progress still.</p>
           </div>
         </div>
 
@@ -104,12 +98,38 @@
       <div class="card" id="projects">
 
         <div class="header">
-          <div class="logo">Projects</div>
+          <div class="logo">projects/1</div>
         </div>
 
 
         <div class="content">
-          <div class="tagline">Creating digital experiences with purpose and precision.</div>
+          <div class="tagline">Server-Client RC Car. WIP</div>
+          <div class="contact">
+            <p><a href="https://github.com">github/rc-car</a></p>
+            <p>Based on Python and C.</p>
+            <p>Created server-client socketted programs to allow for remote control of a robot/car.</p>
+          </div>
+        </div>
+
+        <div class="footer">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+          <button class="theme-toggle" aria-label="Toggle dark mode">Toggle Light</button>
+        </div>
+
+      </div>
+      <!-- "projects" card // projects content ----------------------------------------------------- -->
+
+      <!-- "contact" card // contact content ------------------------------------------------------- -->
+      <div class="card" id="contact">
+
+        <div class="header">
+          <div class="logo">Contact</div>
+        </div>
+
+        <div class="content">
+          <div class="tagline"></div>
           <div class="contact">
             <p><a href="mailto:hello@fazlic.dev">hello@fazlic.dev</a></p>
             <p>Based in Houston, TX</p>
@@ -125,11 +145,15 @@
         </div>
 
       </div>
-      <!-- "projects" card // projects content ----------------------------------------------------- -->
+      <!-- "contact" card // contact content- ----------------------------------------------------- -->
 
-      
+      <!-- last-child visibility set to hidden to add space from bottom of page -->
+      <div class="card"> </div>
     </div>
   </div>
 
+  <script type="module" src="src/main.js"></script>
+  <script type="module" src="src/light-toggle.js"></script>
+  <script type="module" src="src/nav.js"></script>
 </body>
 </html>
