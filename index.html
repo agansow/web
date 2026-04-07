@@ -1,157 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Andy Fazlic - Portfolio</title>
-  <script type="module" crossorigin src="/assets/index-X6TLWx1B.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-CoUO8NB7.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andy Fazlic — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/assets/favicon-BXR5g7Ct.png">
+  <script type="module" crossorigin src="/assets/index-CnRUy5nW.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DYfp8tAX.css">
 </head>
 <body>
-  <!-- background colors -->
-  <canvas id="background-canvas"></canvas>
-  
-  <!-- main content container -->
-  <div id="app">
-    <div class="container">
 
-      <!-- "home" card // main content  ------------------------------------------------------------ -->
-      <div class="card" id="home">
-        
-        <div class="header">
-          <div class="logo">Portfolio</div>
-          <div class="info-panel">
-            <h1 class="name">Andy Fazlic</h1>
-            <div class="title">Software Engineer</div>
-          </div>
-        </div>
+<canvas id="starfield"></canvas>
 
-        
-        <div class="content">
-          <div class="tagline">Studying Computer Science, Software Engineer, Cybersecurity, and Robotics.</div>
-          <div class="contact">
-            <p><a href="mailto:andy@fazlic.dev">andy@fazlic.dev</a></p>
-            <p>Based in Houston, TX</p>
-            <p>Available for new projects</p>
-          </div>
-        </div>
+<!-- ── NAVIGATION ─────────────────────────────────── -->
+<nav id="navbar">
+  <div class="nav-brand">
+    <div class="nav-brand-dot"></div>
+    AF<span>://</span>portfolio
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about"    data-n="01">About</a></li>
+    <li><a href="#projects" data-n="02">Projects</a></li>
+    <li><a href="#skills"   data-n="03">Skills</a></li>
+    <li><a href="#contact"  data-n="04">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
+<div class="nav-mobile" id="navMobile" aria-hidden="true">
+  <a href="#about"    onclick="closeMobileNav()">About</a>
+  <a href="#projects" onclick="closeMobileNav()">Projects</a>
+  <a href="#skills"   onclick="closeMobileNav()">Skills</a>
+  <a href="#contact"  onclick="closeMobileNav()">Contact</a>
+</div>
 
-        <div class="footer">
-          <!-- <a href="#about">About</a> -->
-          <a href="#projects">Projects</a>
-          <!-- <a href="#contact">Contact</a> -->
-          <button class="theme-toggle" aria-label="Toggle dark mode">Toggle Light</button>
+<!-- ── HERO ──────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-wrap">
+
+    <div class="hero-content">
+      <div class="hero-hud">
+        <div class="hud-item"><strong>STATUS</strong><span id="hud-status">SYSTEMS NOMINAL</span></div>
+        <div class="hud-item"><strong>COORD</strong><span>29.76°N 95.36°W</span></div>
+        <div class="hud-item"><strong>UTC</strong><span id="hud-time">--:--:--</span></div>
+        <div class="hud-item"><strong>ISS ALT</strong><span id="hud-alt">408.0 KM</span></div>
+      </div>
+
+      <h1 class="hero-name">Andy<br /><em>Fazlic.</em></h1>
+
+      <p class="hero-typed-row">
+        <span id="typed"></span><span class="cursor"></span>
+      </p>
+
+      <p class="hero-bio">
+        <strong>Computer Engineering &amp; Analytics</strong> student at UH building at
+        the intersection of hardware, data, and discovery. Designing systems,
+        crunching numbers, dreaming in orbital mechanics.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-solid">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          View Projects
+        </a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+        <a href="#" class="btn btn-outline" download>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Résumé
+        </a>
+      </div>
+    </div>
+
+    <!--
+      ══ SOLAR SYSTEM SVG ══════════════════════════════════════
+      All orbit <ellipse> elements use transform="rotate(-18 280 220)".
+      main.js applies the same rotation matrix in orbitPos(), keeping
+      every planet exactly on its path.
+
+      JUPITER: ellipse bands with rx = planet radius (9.5).
+        At x = ±9.5 the ellipse height tapers to 0, naturally fitting
+        inside the planet circle — no clipPath needed.
+        A small red ellipse suggests the Great Red Spot.
+
+      SATURN: two SVG arc-paths inside a tilted inner <g>.
+        Back  arc: M -20,0 A 20,7 0 0,0 20,0  sweep=0 → top arc  → behind planet
+        Front arc: M -20,0 A 20,7 0 0,1 20,0  sweep=1 → bottom arc → in front
+        inner <g transform="rotate(-12)"> tilts the ring system.
+        No clipPath used — arcs are in local group coordinates.
+    ══════════════════════════════════════════════════════════ -->
+    <div class="hero-visual" aria-hidden="true">
+      <svg class="solar-svg" viewBox="0 0 560 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#fef08a" stop-opacity="0.95"/>
+            <stop offset="40%"  stop-color="#f59e0b" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Crosshairs -->
+        <line x1="280" y1="12"  x2="280" y2="428" stroke="rgba(56,189,248,0.04)" stroke-width="1"/>
+        <line x1="12"  y1="220" x2="548" y2="220" stroke="rgba(56,189,248,0.04)" stroke-width="1"/>
+
+        <!-- Orbit paths — all rotate(-18 280 220) -->
+        <ellipse cx="280" cy="220" rx="40"  ry="15.20"  stroke="rgba(156,163,175,0.28)" stroke-width="0.8" transform="rotate(-18 280 220)"/>
+        <ellipse cx="280" cy="220" rx="60"  ry="22.80"  stroke="rgba(232,183,106,0.24)" stroke-width="0.8" transform="rotate(-18 280 220)"/>
+        <ellipse cx="280" cy="220" rx="82"  ry="31.16"  stroke="rgba(56,189,248,0.28)"  stroke-width="0.9" transform="rotate(-18 280 220)"/>
+        <ellipse cx="280" cy="220" rx="108" ry="41.04"  stroke="rgba(239,68,68,0.22)"   stroke-width="0.8" transform="rotate(-18 280 220)"/>
+        <ellipse cx="280" cy="220" rx="130" ry="49.40"  stroke="rgba(255,255,255,0.06)" stroke-width="0.7" stroke-dasharray="2 7" transform="rotate(-18 280 220)"/>
+        <ellipse cx="280" cy="220" rx="152" ry="57.76"  stroke="rgba(232,200,122,0.20)" stroke-width="0.8" transform="rotate(-18 280 220)"/>
+        <ellipse cx="280" cy="220" rx="198" ry="75.24"  stroke="rgba(240,208,128,0.18)" stroke-width="0.8" transform="rotate(-18 280 220)"/>
+        <ellipse cx="280" cy="220" rx="238" ry="90.44"  stroke="rgba(125,211,252,0.15)" stroke-width="0.8" transform="rotate(-18 280 220)"/>
+        <ellipse cx="280" cy="220" rx="268" ry="101.84" stroke="rgba(129,140,248,0.14)" stroke-width="0.7" stroke-dasharray="4 9" transform="rotate(-18 280 220)"/>
+
+        <!-- Sun -->
+        <circle cx="280" cy="220" r="64" fill="url(#sunGlow)"/>
+        <circle cx="280" cy="220" r="15" fill="#f59e0b" opacity="0.95"/>
+        <circle cx="280" cy="220" r="10" fill="#fef08a"/>
+
+        <!-- Simple planets: JS sets cx/cy each frame -->
+        <circle id="p-mercury" r="2.5" fill="#9ca3af"><title>Mercury</title></circle>
+        <circle id="p-venus"   r="3.8" fill="#e8b76a"><title>Venus</title></circle>
+        <circle id="p-earth"   r="4.2" fill="#38bdf8"><title>Earth</title></circle>
+        <circle id="p-mars"    r="3.2" fill="#ef4444"><title>Mars</title></circle>
+        <circle id="p-uranus"  r="5.5" fill="#7dd3fc"><title>Uranus</title></circle>
+        <circle id="p-neptune" r="5.0" fill="#818cf8"><title>Neptune</title></circle>
+
+        <!-- Jupiter: ellipse bands, rx=planet radius so edges taper naturally -->
+        <!-- JS sets transform="translate(x,y)" on the outer <g> -->
+        <g id="p-jupiter">
+          <circle r="9.5" fill="#e8c87a"/>
+          <ellipse rx="9.5" ry="1.2" cy="-5.2" fill="#b8882a" opacity="0.38"/>
+          <ellipse rx="9.5" ry="2.0" cy="-1.8" fill="#b8882a" opacity="0.54"/>
+          <ellipse rx="9.5" ry="1.4" cy=" 2.4" fill="#b8882a" opacity="0.40"/>
+          <ellipse rx="2.2" ry="1.3" cx="-2.5" cy="1.5" fill="#c86858" opacity="0.52"/>
+          <title>Jupiter</title>
+        </g>
+
+        <!-- Saturn: arc-path rings in tilted inner group, no clipPath -->
+        <!-- JS sets transform="translate(x,y)" on the outer <g> -->
+        <g id="p-saturn">
+          <g transform="rotate(-12)">
+            <path d="M -20,0 A 20,7 0 0,0 20,0" fill="none" stroke="#f0d090" stroke-width="4" stroke-opacity="0.22"/>
+            <circle r="8.5" fill="#f0d080"/>
+            <path d="M -20,0 A 20,7 0 0,1 20,0" fill="none" stroke="#f0d090" stroke-width="4" stroke-opacity="0.76"/>
+          </g>
+          <title>Saturn</title>
+        </g>
+      </svg>
+    </div>
+
+  </div><!-- /.hero-wrap -->
+
+  <div class="scroll-cue" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span class="scroll-cue-label">Scroll</span>
+  </div>
+</section>
+
+<!-- ── ABOUT ──────────────────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="reveal">
+        <p class="section-eyebrow">01 — About</p>
+        <h2 class="section-title" style="margin-bottom:2rem">A bit about<br />the mission.</h2>
+        <p>
+          Hi, I'm <strong>Andy Fazlic</strong> — a Computer Engineering &amp; Analytics student
+          at UH with a deep love for systems that push boundaries. Whether that's writing clean
+          embedded C, training ML models, or thinking through orbital mechanics, I want
+          to understand <em>how</em> things work and <em>why</em> they matter.
+        </p>
+        <p>
+          My north star is <strong>NASA</strong>. The idea of contributing to humanity's
+          understanding of the cosmos — through software, hardware, or data — drives
+          everything I build. I believe the best engineering happens at the intersection
+          of curiosity and rigor.
+        </p>
+        <p>
+          Outside the lab I'm usually reading about aerospace systems, tinkering with
+          side projects, or staring at a clear sky and thinking about orbital mechanics.
+        </p>
+        <div class="about-stats">
+          <div class="stat"><div class="stat-val">10+</div><div class="stat-lbl">Yeards Coding</div></div>
+          <div class="stat"><div class="stat-val">0</div><div class="stat-lbl">Problems too Hard</div></div>
+          <div class="stat"><div class="stat-val">∞</div><div class="stat-lbl">Curiosity</div></div>
+          <div class="stat"><div class="stat-val">1</div><div class="stat-lbl">Dream: NASA</div></div>
         </div>
       </div>
-      <!-- "home" card // main content  ------------------------------------------------------------ -->
-      
-      <!-- "about" card // about content ----------------------------------------------------------- -->
-      <!-- <div class="card" id="about">
 
-        <div class="header">
-          <div class="logo">About</div>
+      <!--
+        ══ EARTH + SATELLITES SVG ═══════════════════════════════
+        Center: (160, 160)  |  viewBox: 0 0 320 320
+
+        Orbit ellipses must match main.js earthSatellites[] exactly:
+          ISS    rx=42,  ry=15.96  rotDeg=-18  fast, close
+          Comm   rx=68,  ry=25.84  rotDeg=-18  medium, dashed
+          Polar  rx=90,  ry=34.20  rotDeg=+72  different plane (nearly vertical)
+          Moon   rx=128, ry=48.64  rotDeg=-18  slow, outermost
+
+        Satellite shapes are drawn in LOCAL coordinates (origin=0,0).
+        JS sets transform="translate(x,y)" on each satellite <g>.
+
+        earthMask clipPath is applied to a STATIC <g> that never
+        moves — so it clips landmasses to the Earth sphere correctly.
+        Satellite groups do NOT use this clipPath.
+        ════════════════════════════════════════════════════════ -->
+      <div class="about-right reveal reveal-d2">
+        <div class="orbit-container">
+          <svg class="about-orbit-svg" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="earthBody" cx="152" cy="150" r="28" gradientUnits="userSpaceOnUse">
+                <stop offset="0%"   stop-color="#bae6fd"/>
+                <stop offset="45%"  stop-color="#38bdf8"/>
+                <stop offset="100%" stop-color="#0c4a6e"/>
+              </radialGradient>
+              <radialGradient id="earthAtm" cx="160" cy="160" r="36" gradientUnits="userSpaceOnUse">
+                <stop offset="70%"  stop-color="rgba(56,189,248,0)"/>
+                <stop offset="100%" stop-color="rgba(56,189,248,0.10)"/>
+              </radialGradient>
+              <clipPath id="earthMask">
+                <circle cx="160" cy="160" r="26"/>
+              </clipPath>
+            </defs>
+
+            <!-- Orbit paths — must match main.js earthSatellites[] rx/ry/rotDeg -->
+            <ellipse cx="160" cy="160" rx="42"  ry="15.96" stroke="rgba(56,189,248,0.28)"  stroke-width="0.9" transform="rotate(-18 160 160)"/>
+            <ellipse cx="160" cy="160" rx="68"  ry="25.84" stroke="rgba(245,158,11,0.20)"  stroke-width="0.8" stroke-dasharray="3 5" transform="rotate(-18 160 160)"/>
+            <ellipse cx="160" cy="160" rx="90"  ry="34.20" stroke="rgba(45,212,191,0.16)"  stroke-width="0.8" stroke-dasharray="2 8" transform="rotate(72 160 160)"/>
+            <ellipse cx="160" cy="160" rx="128" ry="48.64" stroke="rgba(255,255,255,0.08)" stroke-width="0.7" transform="rotate(-18 160 160)"/>
+
+            <!-- Atmosphere glow -->
+            <circle cx="160" cy="160" r="36" fill="url(#earthAtm)"/>
+            <circle cx="160" cy="160" r="30" fill="none" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.12"/>
+
+            <!-- Earth sphere -->
+            <circle cx="160" cy="160" r="26" fill="url(#earthBody)"/>
+
+            <!-- Landmasses — static group clipped to Earth; never translated -->
+            <g clip-path="url(#earthMask)" opacity="0.42">
+              <path d="M143 148 C140 154 138 163 141 171 C143 177 148 175 149 168 C152 159 151 151 148 147Z" fill="#76be4e"/>
+              <path d="M144 145 C149 142 155 143 157 146 C158 149 155 151 152 150 C148 150 144 148 144 145Z" fill="#76be4e"/>
+              <path d="M158 147 C163 143 173 145 177 149 C179 153 176 157 170 157 C164 158 158 155 158 150Z" fill="#76be4e"/>
+              <path d="M163 157 C168 160 169 169 166 175 C163 179 160 176 159 169 C158 163 160 157 163 157Z" fill="#76be4e"/>
+              <ellipse cx="152" cy="144" rx="3.5" ry="2.5" fill="#76be4e" opacity="0.7"/>
+              <ellipse cx="174" cy="169" rx="3" ry="2" fill="#76be4e" opacity="0.55" transform="rotate(10 174 169)"/>
+            </g>
+
+            <!-- Thin atmosphere edge -->
+            <circle cx="160" cy="160" r="27" fill="none" stroke="#7dd3fc" stroke-width="0.6" stroke-opacity="0.20"/>
+
+            <!-- ISS: H-shaped cross body + rectangular solar panel wings -->
+            <g id="sat-iss">
+              <rect x="-5.5" y="-0.7" width="4.5" height="1.4" fill="#38bdf8" opacity="0.92"/>
+              <rect x=" 1.0" y="-0.7" width="4.5" height="1.4" fill="#38bdf8" opacity="0.92"/>
+              <rect x="-1.2" y="-2.4" width="2.4" height="4.8" fill="#38bdf8"/>
+              <title>ISS (~408 km)</title>
+            </g>
+
+            <!-- Comm satellite: dish ellipse + solar wings -->
+            <g id="sat-comm">
+              <ellipse rx="3.2" ry="2.0" fill="none" stroke="#f59e0b" stroke-width="0.9"/>
+              <line x1="0" y1="-2" x2="0" y2="1.8" stroke="#f59e0b" stroke-width="0.7"/>
+              <rect x="-6.5" y="-0.6" width="5.0" height="1.2" fill="#f59e0b" opacity="0.60"/>
+              <rect x=" 1.5" y="-0.6" width="5.0" height="1.2" fill="#f59e0b" opacity="0.60"/>
+              <title>Comm Satellite</title>
+            </g>
+
+            <!-- Polar imaging sat: long rectangular body + short cross-wing -->
+            <g id="sat-polar">
+              <rect x="-1.5" y="-4.0" width="3.0" height="8.0" fill="#2dd4bf" opacity="0.88"/>
+              <rect x="-5.5" y="-0.9" width="11.0" height="1.8" fill="#2dd4bf" opacity="0.52"/>
+              <title>Polar Sat</title>
+            </g>
+
+            <!-- Moon: grey sphere with two crater rings -->
+            <g id="sat-moon">
+              <circle r="6.5" fill="#8899aa" opacity="0.68"/>
+              <circle cx="-2.2" cy="-1.5" r="1.5" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
+              <circle cx=" 2.5" cy=" 2.2" r="1.0" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
+              <circle cx="-0.5" cy=" 2.8" r="0.7" fill="rgba(0,0,0,0.14)"/>
+              <title>Moon</title>
+            </g>
+          </svg>
         </div>
 
-
-        <div class="content">
-          <div class="tagline">Studying Computer Science, Software Engineer, Cybersecurity, and Robotics.</div>
-        </div>
-
-        <div class="footer">
-          <a href="#about">About</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
-          <button class="theme-toggle" aria-label="Toggle dark mode">Toggle Light</button>
-        </div>
-
-      </div> -->
-      <!-- "about" card // about content ----------------------------------------------------------- -->
-
-      <!-- "projects" card // projects content ----------------------------------------------------- -->
-      <div class="card" id="projects">
-
-        <div class="header">
-          <div class="logo">projects/0</div>
-        </div>
-
-
-        <div class="content">
-          <div class="tagline">Card Battler and Simulator. WIP</div>
-          <div class="contact">
-            <p><a href="https://github.com">github/card-battler</a></p>
-            <p>Based on Python.</p>
-            <p>Created a Card Battling game, with modular support for adding new cards and simulation. Work in Progress still.</p>
+        <!-- Terminal card -->
+        <div class="terminal-card">
+          <div class="terminal-bar">
+            <div class="terminal-dot" style="background:#ff5f57"></div>
+            <div class="terminal-dot" style="background:#febc2e"></div>
+            <div class="terminal-dot" style="background:#28c840"></div>
+            <span class="terminal-title">mission-control — bash</span>
+          </div>
+          <div class="terminal-body">
+            <div><span class="t-prompt">$ </span><span class="t-cmd">whoami</span></div>
+            <div>&nbsp;&nbsp;→ <span class="t-val">Andy Fazlic</span></div>
+            <div><span class="t-prompt">$ </span><span class="t-cmd">cat major.txt</span></div>
+            <div>&nbsp;&nbsp;→ <span class="t-val">Comp. Eng. &amp; Analytics</span></div>
+            <div><span class="t-prompt">$ </span><span class="t-cmd">echo $GOAL</span></div>
+            <div>&nbsp;&nbsp;→ <span class="t-val">Work at NASA</span></div>
+            <div><span class="t-prompt">$ </span><span class="t-cmd">status --all</span></div>
+            <div>&nbsp;&nbsp;→ <span class="t-val">NOMINAL. ALL GREEN. ✓</span></div>
           </div>
         </div>
-
-        <div class="footer">
-          <!-- <a href="#about">About</a> -->
-          <a href="#projects">Projects</a>
-          <!-- <a href="#contact">Contact</a> -->
-          <button class="theme-toggle" aria-label="Toggle dark mode">Toggle Light</button>
-        </div>
-
       </div>
-      <!-- "projects" card // projects content ----------------------------------------------------- -->
-      
-      <!-- "projects" card // projects content ----------------------------------------------------- -->
-      <div class="card" id="projects">
 
-        <div class="header">
-          <div class="logo">projects/1</div>
-        </div>
-
-
-        <div class="content">
-          <div class="tagline">Server-Client RC Car. WIP</div>
-          <div class="contact">
-            <p><a href="https://github.com">github/rc-car</a></p>
-            <p>Based on Python and C.</p>
-            <p>Created server-client socketted programs to allow for remote control of a robot/car.</p>
-          </div>
-        </div>
-
-        <div class="footer">
-          <!-- <a href="#about">About</a> -->
-          <a href="#projects">Projects</a>
-          <!-- <a href="#contact">Contact</a> -->
-          <button class="theme-toggle" aria-label="Toggle dark mode">Toggle Light</button>
-        </div>
-
-      </div>
-      <!-- "projects" card // projects content ----------------------------------------------------- -->
-
-      <!-- "contact" card // contact content ------------------------------------------------------- -->
-      <div class="card" id="contact">
-
-        <div class="header">
-          <div class="logo">Contact</div>
-        </div>
-
-        <div class="content">
-          <div class="tagline"></div>
-          <div class="contact">
-            <p><a href="mailto:andy@fazlic.dev">andy@fazlic.dev</a></p>
-            <p>Based in Houston, TX</p>
-            <p>Available for new projects</p>
-          </div>
-        </div>
-
-        <div class="footer">
-          <!-- <a href="#about">About</a> -->
-          <a href="#projects">Projects</a>
-          <!-- <a href="#contact">Contact</a> -->
-          <button class="theme-toggle" aria-label="Toggle dark mode">Toggle Light</button>
-        </div>
-
-      </div>
-      <!-- "contact" card // contact content- ----------------------------------------------------- -->
-
-      <!-- last-child visibility set to hidden to add space from bottom of page -->
-      <div class="card"> </div>
     </div>
   </div>
+</section>
+
+<!-- ── PROJECTS ───────────────────────────────────── -->
+<section id="projects">
+  <div class="container">
+    <div class="projects-header reveal">
+      <div>
+        <p class="section-eyebrow">02 — Projects</p>
+        <h2 class="section-title">Mission Logs.</h2>
+      </div>
+      <a href="https://github.com/agansow" class="btn btn-outline" target="_blank" rel="noopener" style="flex-shrink:0">All on GitHub →</a>
+    </div>
+    <div class="projects-grid" id="projects-grid"></div>
+  </div>
+</section>
+
+<!-- ── SKILLS ────────────────────────────────────── -->
+<section id="skills">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:3.5rem">
+      <p class="section-eyebrow">03 — Skills</p>
+      <h2 class="section-title">Systems Online.</h2>
+    </div>
+    <div class="skills-grid" id="skills-grid"></div>
+  </div>
+</section>
+
+<!-- ── CONTACT ───────────────────────────────────── -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-box reveal">
+      <div class="contact-status">AVAILABLE FOR OPPORTUNITIES</div>
+      <h2 class="contact-title">Ready to Launch.</h2>
+      <p class="contact-desc">
+        Whether it's an internship, a collaboration, or just a conversation
+        about the cosmos — my inbox is always open.
+      </p>
+      <div class="contact-btns">
+        <a href="mailto:andy@fazlic.dev" class="btn btn-solid">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Send a Message
+        </a>
+        <a href="https://github.com/agansow" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.fazlic.dev" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
+          Website
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ────────────────────────────────────── -->
+<footer>
+  <p>// CRAFTED IN THE COSMOS — ANDY FAZLIC — 2026</p>
+  <p class="footer-coords">LAT 29.76°N · LON 95.36°W · ALT 0 M</p>
+  <p><a href="https://www.flaticon.com/free-icons/cosmos" title="cosmos icons">Cosmos icons created by max.icons - Flaticon</a></p>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
 </body>
 </html>
