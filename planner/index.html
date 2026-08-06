@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; base-uri 'self'; form-action 'self';" />
+  <title>Course Scheduler</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script type="module" crossorigin src="/planner/assets/index-C8d0KEFI.js"></script>
+  <link rel="stylesheet" crossorigin href="/planner/assets/index--DeCNkLN.css">
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- HEADER -->
+    <header id="app-header">
+      <div class="header-brand">
+        <svg class="brand-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="4" fill="currentColor" opacity="0.9"/>
+          <ellipse cx="16" cy="16" rx="14" ry="6" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <ellipse cx="16" cy="16" rx="6" ry="14" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.4"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">Orbit Planner</span>
+          <span class="brand-sub">Course Scheduler</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btn-add-course" class="btn btn-primary">+ Add Course</button>
+        <button id="btn-export" class="btn btn-ghost" title="Export the plan">Export</button>
+        <button id="btn-import" class="btn btn-ghost" title="Import a plan">Import</button>
+        <button id="btn-layout-toggle" class="btn btn-ghost" title="Toggle layout">Layout</button>
+        <button id="btn-schedule"    class="btn btn-ghost" title="Weekly schedule">Schedule</button>
+        <button id="btn-settings"    class="btn btn-ghost" title="Open settings">Settings</button>
+      </div>
+    </header>
+
+    <!-- TIMELINE (rendered by timeline.js) -->
+    <main id="timeline-container" aria-label="Semester timeline">
+      <div id="timeline-root"></div>
+    </main>
+
+  </div>
+
+</body>
+</html>
