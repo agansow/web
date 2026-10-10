@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Andy Fazlic — Portfolio</title>
+  <meta name="description" content="Andy Fazlic — Computer Engineering &amp; Analytics student building at the intersection of hardware, data, and discovery." />
+  <meta name="theme-color" content="#04050a" />   <!-- kept in sync with the sky colour by ascii/index.js -->
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Space Mono: text + tour glyphs · Instrument Serif: section titles · VT323: nebula glyphs -->
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
+  <script type="module" crossorigin src="/assets/index-QX0Op3-x.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-Dp5-_jnw.css">
+</head>
+<body>
+
+<!-- The ASCII artwork: drawn by src/ascii/ (engine + the active scene) -->
+<canvas id="ascii-canvas" aria-hidden="true"></canvas>
+
+<!-- Filled by src/ascii/nav.js -->
+<nav id="ascii-nav" aria-label="Main"></nav>
+
+<!-- Corner caption (planet / distance), filled by the scene -->
+<div id="ascii-readout" aria-hidden="true"></div>
+
+<!-- Filled by src/ascii/content.js from src/config.js -->
+<main id="ascii-main"></main>
+
+<!-- Shown only if JavaScript is off. Keep in step with config.js. -->
+<noscript>
+  <p style="position:relative;z-index:1;padding:6rem 2rem;max-width:36rem;color:#e9ecf3;font:14px/1.8 'Space Mono',monospace">
+    <strong>Andy Fazlic</strong><br>
+    Computer Engineering &amp; Analytics student.<br><br>
+    <a href="mailto:andy@fazlic.dev" style="color:inherit">andy@fazlic.dev</a> ·
+    <a href="https://github.com/agansow" style="color:inherit">GitHub</a><br><br>
+    This site draws its artwork with JavaScript. Please enable it to see the full page.
+  </p>
+</noscript>
+
+</body>
+</html>
